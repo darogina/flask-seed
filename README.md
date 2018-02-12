@@ -22,6 +22,7 @@ Flask seed project...
 1. Install python packages
     ```bash
     $ pipenv install
+    $ pipenv install --dev
     ```
 1. Set environment variables necessary to run Flask
     ```bash

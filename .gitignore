@@ -10,12 +10,14 @@ build
 *.egg-info
 _mailinglist
 .tox
-.cache/
+.cache
+.pytest_cache
 .idea/
 instance/*
 
 # Local sqlite DB
 dev.db
+test.db
 
 # Coverage reports
 htmlcov

@@ -26,6 +26,7 @@ simplejson = "*"
 [dev-packages]
 
 pytest = "*"
+pytest-flask = "*"
 
 
 [requires]

@@ -1,3 +1,4 @@
+import importlib
 import logging
 import os
 
@@ -7,6 +8,7 @@ from flask_cors import CORS
 import config
 from app import commands, db, migrate, ROOT_PROJECT_DIR
 
+# from app.model.example import Example
 # from flask.ext.sqlalchemy import SQLAlchemy
 # from flask.ext.bcrypt import Bcrypt
 # from flask.ext.login import LoginManager
@@ -16,10 +18,41 @@ from app import commands, db, migrate, ROOT_PROJECT_DIR
 # bcrypt = Bcrypt()
 # login_manager = LoginManager()
 
+MODEL_DIRS = [
+    'model',
+    'model.inner_package'
+]
+
+MODEL_EXCLUDE_FILES = [
+    '__init__.py',
+]
+
+
+def scan_models():
+    for dirpath, dirnames, filenames in os.walk('.'):
+        head, tail = os.path.split(dirpath)
+        if tail in MODEL_DIRS:
+            # there should be models
+            for filename in filenames:
+                if filename.endswith('.py') and \
+                        filename not in MODEL_EXCLUDE_FILES:
+                    # lets import the module
+                    filename_no_ext, _ = os.path.splitext(
+                        os.path.join(
+                            dirpath, filename
+                        )
+                    )
+                    # remove first . character
+                    filename_no_ext = filename_no_ext[2:]
+                    module_path = filename_no_ext.replace(os.sep, '.')
+                    importlib.import_module(module_path)
+
+
 CONFIGS = {
     'local': config.LocalConfig,
     'dev': config.DevelopmentConfig,
-    'prod': config.ProductionConfig
+    'prod': config.ProductionConfig,
+    'test': config.TestConfig
 }
 
 
@@ -35,6 +68,10 @@ def create_app(env=None):
     if app.config.get('LOG_LEVEL') is not None:
         print('Setting Log Level to %s' % (app.config.get('LOG_LEVEL')))
         logging.basicConfig(level=logging.getLevelName(app.config.get('LOG_LEVEL')))
+
+    # scan_models()
+    from .model import import_models
+    import_models()
 
     db.app = app
     db.init_app(app)
@@ -121,7 +158,7 @@ def load_blueprints(app):
 
 def register_commands(app):
     """Register Click commands."""
-    app.cli.add_command(commands.test)
+    # app.cli.add_command(commands.test)
     app.cli.add_command(commands.lint)
     app.cli.add_command(commands.clean)
     app.cli.add_command(commands.urls)
