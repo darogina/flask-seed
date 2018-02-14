@@ -45,7 +45,7 @@ def requires_auth(f):
     """
     @wraps(f)
     def decorated(*args, **kwargs):
-        if app.config.get('FORCE_DISABLE_AUTH'):
+        if app.config.get('DISABLE_AUTH'):
             return f(*args, **kwargs)
         token = get_token_auth_header()
         jsonurl = urlopen("https://" + AUTH0_DOMAIN + "/.well-known/jwks.json")

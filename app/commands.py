@@ -8,19 +8,32 @@ from flask import current_app
 from flask.cli import with_appcontext
 from werkzeug.exceptions import MethodNotAllowed, NotFound
 
-from app import db
+from app import db, ROOT_PROJECT_DIR
+from config import utils, ENVIRON_PREFIX
 
 HERE = os.path.abspath(os.path.dirname(__file__))
-PROJECT_ROOT = os.path.join(HERE, os.pardir)
-TEST_PATH = os.path.join(PROJECT_ROOT, 'tests')
+TEST_PATH = os.path.abspath(os.path.join(ROOT_PROJECT_DIR, 'tests'))
 
 
-# @click.command()
-# def test():
-#     """Run the tests."""
-#     import pytest
-#     rv = pytest.main([TEST_PATH, '--verbose'])
-#     exit(rv)
+@click.command()
+@click.option('--disable-auth', envvar=ENVIRON_PREFIX + '_DISABLE_AUTH', default=True)
+@click.option('--cov-package', default='app')
+def test(disable_auth, cov_package):
+    """Run the tests."""
+    import pytest
+
+    # Set auth environment variable
+    _auth_env_var = ENVIRON_PREFIX + '_DISABLE_AUTH'
+    if isinstance(disable_auth, str):
+        disable_auth = utils.str2bool(disable_auth)
+    os.environ[_auth_env_var] = str(disable_auth)
+
+    # Force config to test
+    _config_env_var = ENVIRON_PREFIX + '_CONFIG'
+    os.environ[_config_env_var] = "test"
+
+    rv = pytest.main([TEST_PATH, '--verbose', "--cov", cov_package])
+    exit(rv)
 
 
 @click.command()
@@ -132,3 +145,7 @@ def create_db():
     #     db.cursor().executescript(f.read())
     db.create_all(app=current_app)
     click.echo('Created initial database.')
+
+
+if __name__ == "__main__":
+    test()

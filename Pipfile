@@ -27,6 +27,7 @@ simplejson = "*"
 
 pytest = "*"
 pytest-flask = "*"
+pytest-cov = "*"
 
 
 [requires]
