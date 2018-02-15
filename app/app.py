@@ -103,6 +103,8 @@ def setup_config(app, env):
     if env is None or env not in CONFIGS:
         raise Exception('Error: Could not locate application config. Make sure environment variable {}_CONFIG '
                         'is set or an environment name is passed in to app.create_app()'.format(config.ENVIRON_PREFIX))
+
+    print("App env: %s" % env)
     _config = CONFIGS[env]
 
     # Load the default configuration

@@ -21,6 +21,7 @@ flask-cors = "*"
 flask-sqlalchemy = "*"
 flask-migrate = "*"
 simplejson = "*"
+gunicorn = "*"
 
 
 [dev-packages]

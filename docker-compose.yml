@@ -5,11 +5,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.local
-    command: "/usr/src/app/bootstrap.sh"
+    command: "/app/bootstrap.sh"
     volumes:
-      - ./config:/usr/src/app/config/
-      - ./instance:/usr/src/app/instance/
-      - ./project:/usr/src/app/project/
-      - ./manage.py:/usr/src/app/manage.py
+      - ./config:/app/config/
+      - ./instance:/app/instance/
+      - ./app:/app/project/
+      - ./autoapp.py:/app/manage.py
     ports:
      - "5000:5000"
