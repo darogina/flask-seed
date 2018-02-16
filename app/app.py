@@ -143,13 +143,9 @@ def _initialize_errorhandlers(app):
 
 
 def _initialze_api_versions(app):
-    from app.api.v1.views import api_blueprint as api_v1_blueprint
-    # from .oauth.views import oauth_blueprint
-    # from .pages.views import pages_blueprint
+    from app.api.v1 import api_blueprint as api_v1_blueprint
 
     app.register_blueprint(api_v1_blueprint, url_prefix='/api/v1')
-    # app.register_blueprint(oauth_blueprint, url_prefix='/oauth')
-    # app.register_blueprint(pages_blueprint)
 
 
 def load_blueprints(app):
