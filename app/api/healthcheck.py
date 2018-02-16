@@ -4,7 +4,7 @@ from flask import Blueprint, jsonify
 
 from app import db
 
-api_healthcheck_blueprint = Blueprint('api.healthcheck', __name__)
+api_healthcheck_blueprint = Blueprint('api', __name__)
 
 
 @api_healthcheck_blueprint.route('/health/', methods=['GET'])
