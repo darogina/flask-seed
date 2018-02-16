@@ -1,4 +1,4 @@
-from flask import jsonify, request
+from flask import request
 
 from app.api.common import PrivateAPIEndpoint
 from app.service import money_service

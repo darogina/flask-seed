@@ -143,8 +143,10 @@ def _initialize_errorhandlers(app):
 
 
 def _initialze_api_versions(app):
+    from app.api.healthcheck import api_healthcheck_blueprint
     from app.api.v1 import api_blueprint as api_v1_blueprint
 
+    app.register_blueprint(api_healthcheck_blueprint, url_prefix='/api')
     app.register_blueprint(api_v1_blueprint, url_prefix='/api/v1')
 
 
