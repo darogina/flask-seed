@@ -1,12 +1,12 @@
 # Flask Seed
+
+[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/darogina/flask-seed/master/LICENSE)
+[![Build Status](https://travis-ci.org/darogina/flask-seed.svg?branch=master)](https://travis-ci.org/darogina/flask-seed)
+
+---------------
 Flask seed project...
 
 ## Quick Start
-
-### Requirements
-
-* Python 3
-* [Pipenv](https://docs.pipenv.org/)
 
 ### Basic Setup
 1. Install pipenv
