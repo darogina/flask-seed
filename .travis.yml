@@ -1,0 +1,17 @@
+language: python
+
+python:
+  - "3.6"
+
+env:
+  global:
+    - FLASK_APP=autoapp.py
+    - FLASK_APP_CONFIG=test
+
+install:
+  - pip install pipenv
+  - pipenv install
+  - pipenv install --dev
+
+script:
+  - flask test
